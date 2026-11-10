@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SSEC: su planta y su obra, bajo control</title>
+<meta name="description" content="Plataforma de control de accesos y gestión de contratistas, torres móviles CCTV solares y drones autónomos para plantas y obras. Monterrey, Nuevo León.">
+<meta name="theme-color" content="#1B2559">
+<meta property="og:title" content="SSEC: su planta y su obra, bajo control">
+<meta property="og:description" content="Control de accesos, gestión de contratistas, torres CCTV solares y drones autónomos.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Barlow+Semi+Condensed:wght@700&display=swap" rel="stylesheet">
+<!--
+  Sitio de SSEC para ssec.mx (destino del QR de la tarjeta y del tríptico).
+  Subir a la raíz del dominio: este index.html más la carpeta img/ (fotos, logo e ícono). Sin JavaScript.
+  Datos para cambiar en un solo lugar cada uno:
+    WhatsApp ... buscar "wa.me/528115116913"
+    Correo ..... buscar "info@ssec.mx"
+    Plataforma . buscar "https://controldeaccesos.mx" (botón "Ya soy usuario" y liga del pie)
+-->
+<style>
+:root{
+  --navy:#1B2559;
+  --ink:#10173A;
+  --slate:#3C4365;
+  --mist:#E7EBF7;
+  --haze:#C5CBE3;
+  --green:#7FC241;
+  --white:#FFFFFF;
+  --gutter:clamp(20px,5vw,64px);
+  --maxw:1160px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;font-family:'Barlow',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:1.0625rem;line-height:1.55;color:var(--ink);background:var(--white)}
+img,svg{display:block;max-width:100%}
+h1,h2,h3,p,ul{margin:0}
+ul{padding:0;list-style:none}
+.junto{white-space:nowrap}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--navy);outline-offset:3px;border-radius:4px}
+.oscuro :focus-visible{outline-color:var(--white)}
+
+.contenedor{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gutter)}
+.salto{position:absolute;left:var(--gutter);top:-80px;z-index:20;padding:10px 16px;border-radius:8px;background:var(--white);color:var(--navy);font-weight:600}
+.salto:focus{top:10px}
+
+/* Botones */
+.boton{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:12px 24px;border:2px solid var(--green);border-radius:10px;background:var(--green);color:var(--ink);font-weight:700;font-size:1.0625rem;line-height:1.2;text-decoration:none;text-align:center}
+.boton:hover{background:#8ED04F;border-color:#8ED04F}
+.boton--linea{background:transparent;border-color:var(--haze);color:var(--white);font-weight:600}
+.boton--linea:hover{background:rgba(255,255,255,.08);border-color:var(--white)}
+.boton--chico{min-height:44px;padding:8px 18px;font-size:1rem}
+
+/* Insignia numerada y etiqueta, igual que en el tríptico */
+.insignia{display:flex;align-items:center;justify-content:center;flex:none;width:44px;height:44px;border-radius:10px;background:var(--navy);color:var(--green);font-family:'Barlow Semi Condensed','Barlow',sans-serif;font-weight:700;font-size:1.5rem;line-height:1}
+.etiqueta{font-size:.8125rem;line-height:1.3;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--slate)}
+
+/* Barra superior */
+.barra{position:sticky;top:0;z-index:10;background:var(--navy);color:var(--white)}
+.barra__fila{display:flex;align-items:center;gap:24px;min-height:64px}
+.barra__logo{flex:none;margin-right:auto}
+.barra__logo img{width:95px;height:30px}
+.barra__nav{display:none;gap:28px;font-weight:500}
+.barra__nav a{text-decoration:none;padding:10px 0}
+.barra__nav a:hover{text-decoration:underline;text-underline-offset:6px;text-decoration-color:var(--green);text-decoration-thickness:2px}
+
+/* Portada */
+.portada{display:grid;grid-template-columns:minmax(0,1fr);background:var(--navy);color:var(--white)}
+.portada__texto{display:flex;flex-direction:column;gap:22px;padding:clamp(36px,7vw,72px) var(--gutter) clamp(36px,7vw,56px)}
+.portada__foto{margin:0;position:relative;min-height:0}
+.portada__foto img{width:100%;height:100%;aspect-ratio:4/3;object-fit:cover;object-position:55% 50%}
+.portada__foto::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,var(--navy) 0,rgba(27,37,89,0) 18%)}
+.portada h1{font-weight:300;font-size:clamp(2.25rem,10vw,4.75rem);line-height:1.03;text-transform:uppercase;text-wrap:balance}
+.portada h1 strong{display:block;font-weight:700;color:var(--green)}
+.portada__bajada{max-width:30em;font-size:clamp(1.125rem,2.2vw,1.375rem);line-height:1.45;color:var(--mist);text-wrap:pretty}
+.portada__acciones{display:flex;flex-direction:column;gap:12px;margin-top:8px}
+
+/* Secciones */
+.seccion{padding:clamp(56px,9vw,104px) 0}
+.seccion[id],.solucion[id]{scroll-margin-top:76px}
+.seccion h2{font-weight:700;font-size:clamp(1.875rem,4.6vw,2.75rem);line-height:1.1;color:var(--navy);text-wrap:balance}
+.seccion__cabeza{display:flex;flex-direction:column;gap:12px;max-width:44rem;margin-bottom:clamp(28px,5vw,48px)}
+.seccion__cabeza p{font-size:1.125rem;text-wrap:pretty}
+.cabeza__marca{display:flex;align-items:center;gap:14px}
+
+/* Índice de las tres soluciones */
+.indice{display:grid;grid-template-columns:1fr;gap:0 40px}
+.indice a{display:flex;flex-direction:column;gap:10px;padding:20px 0 26px;border-top:1px solid var(--navy);text-decoration:none}
+.indice__titulo{display:flex;align-items:center;gap:14px}
+.indice h3{font-weight:700;font-size:1.375rem;line-height:1.2;color:var(--navy)}
+.indice a:hover h3{text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:2px;text-decoration-color:var(--green)}
+.indice p{text-wrap:pretty}
+
+/* Plataforma */
+.plataforma{background:var(--mist)}
+.destacado{display:grid;grid-template-columns:1fr;gap:24px;padding:24px;border-radius:16px;background:var(--navy);color:var(--white);margin-bottom:12px}
+.destacado__cuerpo{display:flex;flex-direction:column;gap:14px;min-width:0}
+.destacado__cuerpo h4{margin:10px 0 0;font-weight:700;font-size:1.0625rem;line-height:1.3;color:var(--green)}
+.pasos{display:flex;flex-direction:column;gap:12px}
+.pasos li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;align-items:start}
+.pasos .num{width:28px;height:28px;border-radius:50%;background:var(--green);color:var(--ink);font-weight:700;font-size:.9375rem;display:flex;align-items:center;justify-content:center}
+.pasos p{font-size:1rem;line-height:1.45;color:var(--mist);text-wrap:pretty}
+.pasos strong{color:var(--white)}
+.destacado__tel{margin:0;display:flex;flex-direction:column;gap:10px;max-width:236px;justify-self:center}
+.destacado__tel img{width:100%;height:auto;border-radius:26px;border:6px solid var(--ink);background:var(--ink)}
+.destacado__tel figcaption{font-size:.875rem;line-height:1.4;color:var(--haze);text-align:center}
+.destacado--permisos{margin-top:clamp(40px,6vw,64px)}
+.destacado--permisos .destacado__cuerpo > p + p{margin-top:-4px}
+.destacado__pantalla{margin:0;display:flex;flex-direction:column;gap:10px;min-width:0}
+.destacado__pantalla img{width:100%;height:auto;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:var(--white)}
+.destacado__pantalla + .destacado__pantalla{margin-top:-4px}
+.destacado__pantalla figcaption{font-size:.875rem;line-height:1.4;color:var(--haze)}
+.claves{display:flex;flex-direction:column}
+.claves li{display:flex;gap:12px;padding:10px 0;border-top:1px solid rgba(255,255,255,.14);font-size:1rem;line-height:1.45;color:var(--mist);text-wrap:pretty}
+.claves li::before{content:"";flex:none;width:9px;height:9px;margin-top:.5em;border-radius:2px;background:var(--green)}
+.claves strong{color:var(--white)}
+.destacado__titulo{display:flex;align-items:center;gap:14px}
+.destacado h3{font-weight:700;font-size:clamp(1.5rem,3.4vw,2rem);line-height:1.15}
+.destacado p{font-size:1.125rem;line-height:1.45;color:var(--mist);max-width:38em;text-wrap:pretty}
+.destacado svg{flex:none;stroke:var(--green);width:36px;height:36px}
+.accesos{display:grid;grid-template-columns:1fr;gap:24px;padding:clamp(24px,4vw,40px);border-radius:16px;background:var(--white);margin-bottom:12px}
+.accesos__texto{display:flex;flex-direction:column;min-width:0}
+.accesos__titulo{margin-bottom:12px}
+.accesos__titulo svg{stroke:var(--navy)}
+.accesos__titulo h3{font-weight:700;font-size:clamp(1.5rem,3.4vw,2rem);line-height:1.15;color:var(--navy)}
+.accesos__titulo svg{width:36px;height:36px}
+.accesos__texto > p{text-wrap:pretty}
+.accesos .modulo__sub{margin-top:22px}
+.accesos .nota{font-size:.875rem;line-height:1.4;color:var(--slate);margin-top:8px}
+.accesos__fotos{display:flex;flex-direction:column;gap:20px}
+.accesos__fotos .modulo__captura{margin:0}
+.modulos{display:grid;grid-template-columns:1fr;gap:0 40px}
+.modulo{display:grid;grid-template-columns:32px minmax(0,1fr);gap:14px;padding:22px 0;border-top:1px solid var(--navy)}
+.modulo:first-child{border-top:0}
+.modulo svg{stroke:var(--navy)}
+.modulo h3{font-weight:700;font-size:1.1875rem;line-height:1.3;color:var(--navy);margin-bottom:4px}
+.modulo p{text-wrap:pretty}
+.modulo__puntos{display:flex;flex-direction:column;margin-top:10px}
+.modulo__puntos li{display:flex;gap:10px;padding:8px 0;border-top:1px solid var(--haze);font-size:1rem;line-height:1.45;text-wrap:pretty}
+.modulo__puntos li::before{content:"";flex:none;width:8px;height:8px;margin-top:.5em;border-radius:2px;background:var(--green)}
+.modulo__captura{margin:16px 0 0;display:flex;flex-direction:column;gap:8px}
+.modulo__captura img{width:100%;height:auto;border-radius:10px;border:1px solid var(--haze);background:var(--white)}
+.modulo__captura figcaption{font-size:.875rem;line-height:1.4;color:var(--slate)}
+.modulo__sub{margin:22px 0 6px;font-weight:700;font-size:1.0625rem;line-height:1.3;color:var(--navy);text-wrap:balance}
+.modulo .nota{font-size:.875rem;line-height:1.4;color:var(--slate);margin-top:8px}
+
+/* Capturas de la plataforma */
+.pantalla{margin:0 0 clamp(32px,5vw,48px);display:flex;flex-direction:column;gap:10px}
+.pantalla img{width:100%;height:auto;border-radius:14px;border:1px solid var(--haze);box-shadow:0 24px 48px -28px rgba(16,23,58,.5);background:var(--white)}
+.pantalla figcaption{font-size:.9375rem;line-height:1.4;color:var(--slate);text-wrap:pretty}
+.galeria{display:grid;grid-template-columns:1fr;gap:28px;margin-top:clamp(36px,6vw,56px)}
+.captura{margin:0;display:flex;flex-direction:column;gap:10px}
+.captura img{width:100%;height:auto;border-radius:12px;border:1px solid var(--haze);background:var(--white)}
+.captura figcaption{font-size:.9375rem;line-height:1.4;color:var(--slate);text-wrap:pretty}
+.app{margin-top:clamp(48px,8vw,80px);display:flex;flex-direction:column;gap:28px}
+.app__fila{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+.app__fila .tableta{grid-column:1 / -1}
+.app__texto{display:flex;flex-direction:column;gap:12px;max-width:34em}
+.app__texto h3{font-weight:700;font-size:clamp(1.5rem,3.4vw,2rem);line-height:1.15;color:var(--navy)}
+.app__texto p{font-size:1.125rem;text-wrap:pretty}
+.telefono{margin:0;display:flex;flex-direction:column;gap:10px}
+.telefono img{width:100%;height:auto;border-radius:26px;border:6px solid var(--ink);background:var(--ink)}
+.telefono figcaption{font-size:.9375rem;line-height:1.4;color:var(--slate);text-wrap:pretty}
+
+/* Torres y drones */
+.campo{display:grid;grid-template-columns:1fr;gap:clamp(48px,8vw,72px)}
+.solucion{display:flex;flex-direction:column;gap:14px}
+.solucion__foto{margin:0 0 10px;border-radius:16px;overflow:hidden;background:var(--mist)}
+.solucion__foto img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:50% 50%}
+.solucion h2{margin-top:4px}
+.solucion > p{font-size:1.125rem;text-wrap:pretty}
+.vinetas{display:flex;flex-direction:column;margin-top:6px}
+.vinetas li{display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--haze)}
+.vinetas li::before{content:"";flex:none;width:9px;height:9px;margin-top:.5em;border-radius:2px;background:var(--green)}
+
+/* Contacto */
+.contacto{background:var(--navy);color:var(--white)}
+.contacto h2{color:var(--white)}
+.contacto__rejilla{display:grid;grid-template-columns:1fr;gap:36px}
+.contacto__intro{display:flex;flex-direction:column;gap:14px}
+.contacto__intro p{font-size:1.125rem;color:var(--mist);max-width:26em;text-wrap:pretty}
+.contacto__datos{display:flex;flex-direction:column;gap:22px}
+.dato{display:flex;flex-direction:column;gap:2px}
+.dato .etiqueta{color:var(--haze)}
+.dato a{font-weight:600;font-size:clamp(1.625rem,6vw,2.25rem);line-height:1.2;text-decoration:none;overflow-wrap:anywhere}
+.dato a:hover{text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:2px;text-decoration-color:var(--green)}
+.contacto__datos .boton{margin-top:6px}
+.qr{display:none;align-items:center;gap:18px;padding:16px;border-radius:14px;background:var(--white);color:var(--ink);margin-top:10px}
+.qr img{width:124px;height:124px;flex:none;border-radius:6px}
+.qr p{font-size:1rem;line-height:1.4;text-wrap:pretty}
+
+/* Pie */
+.pie{background:var(--ink);color:var(--haze);padding:36px 0 44px;font-size:1rem}
+.pie__fila{display:flex;flex-direction:column;gap:20px}
+.pie__marca{display:flex;flex-direction:column;gap:10px}
+.pie__marca img{width:114px;height:36px}
+.pie__ligas{display:flex;flex-direction:column;gap:4px}
+.pie a{color:var(--white);text-underline-offset:4px;display:inline-block;padding:6px 0}
+
+@media (min-width:560px){
+  .portada__acciones{flex-direction:row;flex-wrap:wrap}
+}
+@media (min-width:760px){
+  .indice{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .accesos{grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(28px,4vw,48px);align-items:start}
+  .modulos{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .modulo:nth-child(2){border-top:0}
+  .destacado{padding:32px 36px;grid-template-columns:minmax(0,1fr) 236px;align-items:center;gap:40px}
+  .destacado--permisos{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}
+  .destacado--permisos .destacado__cuerpo{grid-row:1 / span 2}
+  .campo{grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(40px,6vw,88px)}
+  .galeria{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .app__fila{grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,3.6fr);gap:20px}
+  .app__fila .tableta{grid-column:auto}
+  .contacto__rejilla{grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(40px,6vw,88px);align-items:start}
+  .qr{display:flex}
+  .pie__fila{flex-direction:row;justify-content:space-between;align-items:flex-end}
+  .pie__ligas{align-items:flex-end;text-align:right}
+}
+@media (min-width:900px){
+  .barra__nav{display:flex;margin-inline:auto 8px}
+  .barra__logo{margin-right:0}
+  .portada{grid-template-columns:minmax(var(--gutter),calc((100% - var(--maxw)) / 2 + var(--gutter))) minmax(0,calc(var(--maxw) / 2 - var(--gutter))) minmax(0,1fr)}
+  .portada__texto{grid-column:2;padding:clamp(56px,7vw,96px) clamp(32px,4vw,64px) clamp(56px,7vw,96px) 0;justify-content:center}
+  .portada__foto{grid-column:3;min-height:100%}
+  .portada__foto img{aspect-ratio:auto;min-height:560px}
+  .portada__foto::after{background:linear-gradient(to right,var(--navy) 0,rgba(27,37,89,0) 22%)}
+  .portada h1{font-size:clamp(3rem,4.6vw,4.25rem)}
+  .portada h1 strong{white-space:nowrap}
+}
+@media (prefers-reduced-motion:no-preference){
+  html{scroll-behavior:smooth}
+}
+</style>
+</head>
+<body>
+<a class="salto" href="#contenido">Saltar al contenido</a>
+
+<header class="barra oscuro">
+  <div class="contenedor barra__fila">
+    <a class="barra__logo" href="#inicio" aria-label="SSEC, inicio"><img src="img/logo-ssec-blanco.png" alt="SSEC" width="95" height="30"></a>
+    <nav class="barra__nav" aria-label="Secciones">
+      <a href="#plataforma">Plataforma</a>
+      <a href="#torres">Torres CCTV</a>
+      <a href="#drones">Drones</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <a class="boton boton--chico" href="https://controldeaccesos.mx">Ya soy usuario</a>
+  </div>
+</header>
+
+<main id="contenido">
+
+  <section class="portada oscuro" id="inicio">
+    <div class="portada__texto">
+      <h1>Su planta y su obra, <strong>bajo control.</strong></h1>
+      <p class="portada__bajada">Control de accesos, gestión de contratistas, torres CCTV solares y drones autónomos.</p>
+      <div class="portada__acciones">
+        <a class="boton boton--linea" href="#soluciones">Ver las tres soluciones</a>
+      </div>
+    </div>
+    <figure class="portada__foto">
+      <img src="img/trailas-cctv-solares.jpg" alt="Cinco torres móviles CCTV solares de SSEC estacionadas en una obra al atardecer" width="1440" height="1080" fetchpriority="high">
+    </figure>
+  </section>
+
+  <section class="seccion" id="soluciones">
+    <div class="contenedor">
+      <div class="seccion__cabeza">
+        <p class="etiqueta">Un solo proveedor</p>
+        <h2>Tres soluciones para la seguridad de su operación</h2>
+      </div>
+      <div class="indice">
+        <a href="#plataforma">
+          <div class="indice__titulo"><span class="insignia" aria-hidden="true">01</span><h3>Plataforma SSEC</h3></div>
+          <p>Software de control de accesos, permisos de trabajo digitales y gestión de visitas, trabajadores y contratistas.</p>
+        </a>
+        <a href="#torres">
+          <div class="indice__titulo"><span class="insignia" aria-hidden="true">02</span><h3>Torres CCTV solares</h3></div>
+          <p>Videovigilancia móvil que opera donde no hay energía ni red.</p>
+        </a>
+        <a href="#drones">
+          <div class="indice__titulo"><span class="insignia" aria-hidden="true">03</span><h3>Drones autónomos</h3></div>
+          <p>Patrullaje, “timelapse” y registro aéreo programado sin piloto en sitio.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="seccion plataforma" id="plataforma">
+    <div class="contenedor">
+      <div class="seccion__cabeza">
+        <div class="cabeza__marca"><span class="insignia" aria-hidden="true">01</span><p class="etiqueta">Software</p></div>
+        <h2>Plataforma SSEC</h2>
+        <p>Una aplicación web para controlar quién entra a su planta u obra y que cumpla los requisitos de seguridad industrial para realizar su actividad o trabajo.</p>
+      </div>
+
+      <figure class="pantalla">
+        <img src="img/web-dashboard.jpg" alt="Panel de un proyecto en la plataforma SSEC: control de accesos, permisos de trabajo del día, personal registrado en sitio y plano con personas por zona" width="1400" height="1068" loading="lazy">
+        <figcaption>Panel de proyecto: accesos del día, permisos de trabajo, personal en sitio y plano con personas por zona.</figcaption>
+      </figure>
+
+      <div class="destacado" id="visitas">
+        <div class="destacado__cuerpo">
+          <div class="destacado__titulo">
+            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="6" width="16" height="14" rx="2"></rect><path d="M9 6V4h6v2"></path><circle cx="12" cy="11.5" r="2"></circle><path d="M8.5 17a3.5 3.5 0 0 1 7 0"></path></svg>
+            <h3>Gestión de visitas</h3>
+          </div>
+          <p>Los visitantes se autogestionan: suben sus propios documentos de acceso, el personal de seguridad los revisa y autoriza, y el QR se genera y envía automáticamente por correo. Es un módulo que funciona por sí solo, sin necesidad de los demás.</p>
+          <h4>Así funciona</h4>
+          <ol class="pasos">
+            <li><span class="num" aria-hidden="true">1</span><p><strong>Invitación.</strong> El personal de la organización o de los contratistas envía desde la plataforma una invitación al visitante.</p></li>
+            <li><span class="num" aria-hidden="true">2</span><p><strong>Documentos.</strong> El visitante sube por su cuenta los documentos que su planta le exige.</p></li>
+            <li><span class="num" aria-hidden="true">3</span><p><strong>Revisión.</strong> Una persona de la organización los revisa y aprueba.</p></li>
+            <li><span class="num" aria-hidden="true">4</span><p><strong>Inducción y QR.</strong> El visitante recibe por correo la confirmación con un video de las reglas de comportamiento y seguridad de la planta. Al verlo y aceptar los términos, recibe el QR con el que podrá ingresar.</p></li>
+            <li><span class="num" aria-hidden="true">5</span><p><strong>Check-in y check-out.</strong> Al llegar, el visitante se presenta con su anfitrión, quien registra que ya está con él. Al terminar, el anfitrión escanea el QR del visitante y este tiene 15 minutos para salir de la obra. Así se evita que las visitas deambulen sin supervisión dentro de la obra o el proyecto.</p></li>
+          </ol>
+        </div>
+        <figure class="destacado__tel">
+          <img src="img/app-visita.jpg" alt="Detalle de una visita en la app SSEC: vigencia y flujo de acceso en cuatro pasos, de la caseta a la salida" width="563" height="1168" loading="lazy">
+          <figcaption>El flujo de cada visita, en la app.</figcaption>
+        </figure>
+      </div>
+
+      <div class="accesos" id="accesos">
+        <div class="accesos__texto">
+          <div class="destacado__titulo accesos__titulo">
+            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="1.5"></rect><circle cx="15.5" cy="12" r="1"></circle><path d="M2.5 21h19"></path></svg>
+            <h3>Control de accesos</h3>
+          </div>
+          <p>Entradas y salidas en tiempo real con terminales de reconocimiento facial y credencial QR, o terminal móvil con registro fotográfico de herramienta y equipo.</p>
+          <ul class="modulo__puntos">
+            <li>Registra y monitorea en tiempo real los ingresos y egresos de personal operativo, trabajadores y visitantes.</li>
+            <li>Panel en tiempo real de quién está en sitio, y base de datos de ingresos y egresos exportable a Excel.</li>
+            <li>Las terminales QR y el equipo móvil de registro fotográfico siguen operando sin red: guardan los registros y los sincronizan cuando la conexión regresa.</li>
+          </ul>
+          <h4 class="modulo__sub">Nuestra traila “QR solar”</h4>
+          <p>Para accesos donde no hay energía ni red, SSEC coloca una traila solar autónoma que funciona como caseta de registro conectada a la plataforma.</p>
+          <ul class="modulo__puntos">
+            <li>Lectoras de credencial QR de ingreso y de salida, con semáforo que indica a cada persona si su acceso fue autorizado.</li>
+            <li>Control de torniquetes y plumas en accesos vehiculares*</li>
+            <li>Energía solar con baterías de respaldo; no requiere acometida eléctrica.</li>
+            <li>Conexión celular 4G LTE: opera en entornos remotos, sin depender de la red del cliente.</li>
+            <li>Cada registro llega en tiempo real a la plataforma: quién entró, quién salió y quién sigue en sitio.</li>
+          </ul>
+          <p class="nota">* El control de torniquetes y plumas requiere una traila de mayor tamaño, con un sistema de energía más robusto.</p>
+        </div>
+        <div class="accesos__fotos">
+          <figure class="modulo__captura">
+            <img src="img/guardia-terminal-movil.jpg" alt="Guardia de seguridad escaneando con una terminal móvil la credencial QR de un trabajador en la caseta de acceso de una obra" width="1024" height="559" loading="lazy">
+            <figcaption>Terminal móvil: el guardia escanea la credencial QR del trabajador en el acceso.</figcaption>
+          </figure>
+          <figure class="modulo__captura">
+            <img src="img/traila-control-accesos.jpg" alt="Traila solar de control de accesos SSEC con dos lectoras de QR, semáforo y panel solar, colocada frente a la reja de una planta" width="1000" height="680" loading="lazy">
+            <figcaption>Traila QR solar en operación.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="modulos">
+        <div class="modulo">
+          <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20.5a7 7 0 0 1 14 0"></path></svg>
+          <div>
+            <h3>Gestión de trabajadores</h3>
+            <p>Expediente digital por persona: foto, puesto, empresa, certificaciones <span class="junto">DC-3</span>, aptitudes de riesgo y apto médico.</p>
+            <ul class="modulo__puntos">
+              <li>Campos y documentos obligatorios configurables por proyecto: cada obra exige lo que necesita.</li>
+              <li>El QR del trabajador se desactiva automáticamente cuando vence el SUA o cualquier documento que usted marque como obligatorio.</li>
+              <li>Las aptitudes de cada trabajador se enlazan con los permisos de trabajo digitales: no se puede asignar a una actividad a quien no es apto para ella.</li>
+            </ul>
+            <figure class="modulo__captura">
+              <img src="img/web-trabajadores.jpg" alt="Lista de trabajadores con estatus, credencial QR, puesto, empresa, proyecto y documentos" width="1200" height="916" loading="lazy">
+              <figcaption>Trabajadores: credencial QR, puesto, empresa y documentos de cada persona.</figcaption>
+            </figure>
+          </div>
+        </div>
+        <div class="modulo">
+          <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="10" height="17"></rect><path d="M14 10h6v11h-6"></path><path d="M7.5 8.5h3M7.5 12.5h3M7.5 16.5h3"></path></svg>
+          <div>
+            <h3>Gestión de contratistas</h3>
+            <p>Cada empresa carga sus documentos; el sistema avisa antes de que venzan y bloquea a quien no cumple.</p>
+            <ul class="modulo__puntos">
+              <li>Cumplimiento corporativo a nivel empresa: usted define los documentos que cada contratista debe tener vigentes.</li>
+              <li>Ante un incumplimiento, la empresa se desactiva desde la plataforma.</li>
+              <li>Al desactivar una empresa, todos sus trabajadores quedan bloqueados en los accesos.</li>
+              <li>Archivo histórico anual de los documentos cargados por cada empresa.</li>
+            </ul>
+            <figure class="modulo__captura">
+              <img src="img/web-empresas.jpg" alt="Directorio de empresas contratistas con su estado, avance de documentos y trabajadores" width="1200" height="783" loading="lazy">
+              <figcaption>Empresas contratistas: documentos entregados, vencidos y quién puede entrar.</figcaption>
+            </figure>
+          </div>
+        </div>
+        <div class="modulo">
+          <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4l9 16H3z"></path><path d="M12 10v4.5"></path><path d="M12 17.2v0.1"></path></svg>
+          <div><h3>Sanciones</h3><p>Registre faltas de seguridad por trabajador o empresa y dé seguimiento con historial y evidencia.</p></div>
+        </div>
+        <div class="modulo">
+          <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="2.5"></circle><path d="M3.5 3.5l5 5M8.5 5v3.5H5"></path><path d="M20.5 3.5l-5 5M15.5 5v3.5H19"></path><path d="M3.5 20.5l5-5M8.5 19v-3.5H5"></path><path d="M20.5 20.5l-5-5M15.5 19v-3.5H19"></path></svg>
+          <div><h3>Módulo de evacuación</h3><p>En una emergencia real, sepa al instante quién sigue dentro y quién ya llegó al punto de reunión, con listado de faltantes y reporte descargable al cierre.</p></div>
+        </div>
+      </div>
+
+      <div class="destacado destacado--permisos" id="permisos">
+        <div class="destacado__cuerpo">
+          <div class="destacado__titulo">
+            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3H14l4 4v14H6.5z"></path><path d="M14 3v4h4"></path><path d="M9.3 14.2l2 2 3.6-4.2"></path></svg>
+            <h3>Permisos de trabajo digitales</h3>
+          </div>
+          <p>Solicite, revise y autorice en línea permisos de trabajo: alturas, espacios confinados, corte y soldadura. Todo manteniendo sus formatos existentes.</p>
+          <p>SSEC toma los formatos que su planta ya usa y los digitaliza, ligados a todo el entorno de la plataforma. No tiene que crear un formato nuevo: el sistema se adapta a sus procesos.</p>
+          <ul class="claves">
+            <li><span><strong>Etapas, zonas de liberación, vigencias y campos paramétricos.</strong> Por ejemplo, que en un permiso solo puedan seleccionarse trabajadores con entrada activa en sitio y aptos para esa actividad.</span></li>
+            <li><span><strong>Perfiles de autorizadores y liberadores.</strong> La plataforma sabe quién debe firmar en cada etapa y le avisa: el liberador recibe la notificación, acude a la zona y firma. Nadie pierde tiempo buscando firmas.</span></li>
+            <li><span><strong>Firma autógrafa</strong> con fecha, hora y coordenadas GPS de quien firmó, como registro de auditoría de cada liberación.</span></li>
+            <li><span><strong>Dashboard diario para superintendentes y gerentes de proyecto.</strong> Cuántos permisos están activos en cada frente o zona.</span></li>
+            <li><span><strong>Acceso desde la web o la app.</strong> Y exportación a PDF para archivo o impresión cuando se requiere en físico.</span></li>
+            <li><span><strong>Ubicación del personal.</strong> Cada permiso indica dónde está trabajando cada persona ese día, información que alimenta el módulo de evacuación.</span></li>
+          </ul>
+        </div>
+        <figure class="destacado__pantalla">
+          <img src="img/web-permisos.jpg" alt="Tablero de permisos de trabajo organizado por zona, con el estado de cada permiso" width="1200" height="894" loading="lazy">
+          <figcaption>Tablero de permisos por zona, con el estado del día: en llenado, pendiente de liberación o liberado.</figcaption>
+        </figure>
+        <figure class="destacado__pantalla">
+          <img src="img/permiso-digital-pdf.jpg" alt="Permiso de trabajo con sustancias químicas exportado a PDF, con secciones de datos generales, personal, sustancia y peligros, y preparación para emergencias" width="680" height="880" loading="lazy">
+          <figcaption>El mismo permiso, exportado a PDF con el formato del cliente, listo para archivo o impresión.</figcaption>
+        </figure>
+      </div>
+
+      <div class="app">
+        <div class="app__texto">
+          <h3>La app en campo</h3>
+          <p>Guardias, supervisores y contratistas la usan desde su celular o tableta: escanean credenciales, consultan quién está en obra y, en una emergencia, cuentan al personal en el punto de reunión.</p>
+        </div>
+        <div class="app__fila">
+          <figure class="telefono">
+            <img src="img/app-inicio.jpg" alt="Pantalla de inicio de la app SSEC con 347 personas en obra y accesos a En obra, Visitas, Escanear y Permisos" width="563" height="1168" loading="lazy">
+            <figcaption>Personas en obra en tiempo real y actividad reciente.</figcaption>
+          </figure>
+          <figure class="telefono">
+            <img src="img/app-emergencia.jpg" alt="Pantalla de emergencia de la app SSEC con el botón Enviar alarma" width="563" height="1168" loading="lazy">
+            <figcaption>La alerta de emergencia llega a todos los celulares que tienen la app instalada y abierta.</figcaption>
+          </figure>
+          <figure class="captura tableta">
+            <img src="img/app-tableta-conteo.jpg" alt="Conteo de evacuación en tableta: 347 personas por contar y escáner de credenciales en el punto de reunión" width="1200" height="675" loading="lazy">
+            <figcaption>Conteo de evacuación: con la alarma activa, cada punto de reunión escanea credenciales y la plataforma dice quién falta.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="seccion">
+    <div class="contenedor campo">
+      <article class="solucion" id="torres">
+        <figure class="solucion__foto"><img src="img/traila-cctv-en-obra.jpg" alt="Torre móvil CCTV solar con cámara PTZ en lo alto del mástil, instalada en una obra" width="900" height="1098" loading="lazy"></figure>
+        <div class="cabeza__marca"><span class="insignia" aria-hidden="true">02</span><p class="etiqueta">Videovigilancia</p></div>
+        <h2>Torres móviles CCTV solares</h2>
+        <p>Videovigilancia autónoma donde no hay energía ni red.</p>
+        <ul class="vinetas">
+          <li>Energía solar con baterías de respaldo</li>
+          <li>Cámaras especializadas según la aplicación: perimetrales, térmicas, detección de intrusos y panorámicas de largo alcance</li>
+          <li>Monitoreo remoto vía app y notificaciones por correo en eventos de detección</li>
+          <li>Detección con inteligencia artificial de casco y chaleco: refuerza el uso de EPP y genera una alerta cuando un trabajador no lo porta</li>
+          <li>Sirena de emergencia integrada: las torres de una misma obra se enlazan entre sí, y al presionar el botón de emergencia en cualquiera de ellas suenan todas a la vez</li>
+        </ul>
+      </article>
+      <article class="solucion" id="drones">
+        <figure class="solucion__foto"><img src="img/dron-despegue-dock.jpg" alt="Dron autónomo despegando de su base abierta, instalada junto a la cerca de una obra" width="571" height="714" loading="lazy"></figure>
+        <div class="cabeza__marca"><span class="insignia" aria-hidden="true">03</span><p class="etiqueta">Vigilancia aérea</p></div>
+        <h2>Drones autónomos</h2>
+        <p>Despegan, patrullan y regresan a su base sin piloto en sitio.</p>
+        <ul class="vinetas">
+          <li>Rondines programados de perímetro</li>
+          <li>Alertas por detección de personas</li>
+          <li>Despacho automático del dron al punto donde una torre CCTV detectó un evento, para verificarlo desde el aire</li>
+          <li>Timelapse del avance de obra con fotos diarias</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="seccion contacto oscuro" id="contacto">
+    <div class="contenedor contacto__rejilla">
+      <div class="contacto__intro">
+        <h2>Agende una demostración</h2>
+        <p>Con gusto le mostramos la plataforma y nuestros equipos en operación.</p>
+      </div>
+      <div class="contacto__datos">
+        <div class="dato">
+          <span class="etiqueta">WhatsApp</span>
+          <a href="https://wa.me/528115116913?text=Hola%2C%20me%20interesa%20una%20demostraci%C3%B3n%20de%20SSEC." target="_blank" rel="noopener">81 1511 6913</a>
+        </div>
+        <div class="dato">
+          <span class="etiqueta">Correo</span>
+          <a href="mailto:info@ssec.mx">info@ssec.mx</a>
+        </div>
+        <a class="boton" href="https://wa.me/528115116913?text=Hola%2C%20me%20interesa%20una%20demostraci%C3%B3n%20de%20SSEC." target="_blank" rel="noopener">Agendar demostración por WhatsApp</a>
+        <div class="qr">
+          <img src="img/qr-whatsapp.svg" alt="Código QR que abre el chat de WhatsApp de SSEC" width="124" height="124" loading="lazy">
+          <p>Escanee con su celular para escribirnos por WhatsApp y solicitar su demostración.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="pie oscuro">
+  <div class="contenedor pie__fila">
+    <div class="pie__marca">
+      <img src="img/logo-ssec-blanco.png" alt="SSEC" width="114" height="36">
+      <span>Monterrey, Nuevo León, México</span>
+    </div>
+    <div class="pie__ligas">
+      <a href="https://controldeaccesos.mx">Ya soy usuario: entrar a la plataforma</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
