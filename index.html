@@ -15,7 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Barlow+Semi+Condensed:wght@700&display=swap" rel="stylesheet">
 <!--
   Sitio de SSEC para ssec.mx (destino del QR de la tarjeta y del tríptico).
-  Subir a la raíz del dominio: este index.html más la carpeta img/ (fotos, logo e ícono). Sin JavaScript.
+  Subir a la raíz del dominio: este index.html más la carpeta img/ (fotos, logo e ícono). El único JavaScript es el de las apariciones al hacer scroll (al final del archivo); sin él la página se ve completa.
   Datos para cambiar en un solo lugar cada uno:
     WhatsApp ... buscar "wa.me/528115116913"
     Correo ..... buscar "info@ssec.mx"
@@ -159,7 +159,8 @@ a{color:inherit}
 .app{margin-top:clamp(48px,8vw,80px);display:flex;flex-direction:column;gap:28px}
 .app__fila{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
 .app__fila .tableta{grid-column:1 / -1}
-.app__texto{display:flex;flex-direction:column;gap:12px;max-width:34em}
+.app__texto{display:flex;flex-direction:column;gap:12px;max-width:40em}
+.app__titulo svg{stroke:var(--navy)}
 .app__texto h3{font-weight:700;font-size:clamp(1.5rem,3.4vw,2rem);line-height:1.15;color:var(--navy)}
 .app__texto p{font-size:1.125rem;text-wrap:pretty}
 .telefono{margin:0;display:flex;flex-direction:column;gap:10px}
@@ -208,6 +209,7 @@ a{color:inherit}
   .accesos{grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(28px,4vw,48px);align-items:start}
   .modulos{grid-template-columns:repeat(2,minmax(0,1fr))}
   .modulo:nth-child(2){border-top:0}
+  .modulo:last-child:nth-child(odd){grid-column:1 / -1}
   .destacado{padding:32px 36px;grid-template-columns:minmax(0,1fr) 236px;align-items:center;gap:40px}
   .destacado--permisos{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}
   .destacado--permisos .destacado__cuerpo{grid-row:1 / span 2}
@@ -232,6 +234,10 @@ a{color:inherit}
 }
 @media (prefers-reduced-motion:no-preference){
   html{scroll-behavior:smooth}
+  .js .revela{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+  .js .revela.visto{opacity:1;transform:none}
+  .js .revela--2{transition-delay:.12s}
+  .js .revela--3{transition-delay:.24s}
 }
 </style>
 </head>
@@ -297,12 +303,12 @@ a{color:inherit}
         <p>Una aplicación web para controlar quién entra a su planta u obra y que cumpla los requisitos de seguridad industrial para realizar su actividad o trabajo.</p>
       </div>
 
-      <figure class="pantalla">
+      <figure class="pantalla revela">
         <img src="img/web-dashboard.jpg" alt="Panel de un proyecto en la plataforma SSEC: control de accesos, permisos de trabajo del día, personal registrado en sitio y plano con personas por zona" width="1400" height="1068" loading="lazy">
         <figcaption>Panel de proyecto: accesos del día, permisos de trabajo, personal en sitio y plano con personas por zona.</figcaption>
       </figure>
 
-      <div class="destacado" id="visitas">
+      <div class="destacado revela" id="visitas">
         <div class="destacado__cuerpo">
           <div class="destacado__titulo">
             <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="6" width="16" height="14" rx="2"></rect><path d="M9 6V4h6v2"></path><circle cx="12" cy="11.5" r="2"></circle><path d="M8.5 17a3.5 3.5 0 0 1 7 0"></path></svg>
@@ -318,13 +324,13 @@ a{color:inherit}
             <li><span class="num" aria-hidden="true">5</span><p><strong>Check-in y check-out.</strong> Al llegar, el visitante se presenta con su anfitrión, quien registra que ya está con él. Al terminar, el anfitrión escanea el QR del visitante y este tiene 15 minutos para salir de la obra. Así se evita que las visitas deambulen sin supervisión dentro de la obra o el proyecto.</p></li>
           </ol>
         </div>
-        <figure class="destacado__tel">
+        <figure class="destacado__tel revela">
           <img src="img/app-visita.jpg" alt="Detalle de una visita en la app SSEC: vigencia y flujo de acceso en cuatro pasos, de la caseta a la salida" width="563" height="1168" loading="lazy">
           <figcaption>El flujo de cada visita, en la app.</figcaption>
         </figure>
       </div>
 
-      <div class="accesos" id="accesos">
+      <div class="accesos revela" id="accesos">
         <div class="accesos__texto">
           <div class="destacado__titulo accesos__titulo">
             <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="1.5"></rect><circle cx="15.5" cy="12" r="1"></circle><path d="M2.5 21h19"></path></svg>
@@ -348,11 +354,11 @@ a{color:inherit}
           <p class="nota">* El control de torniquetes y plumas requiere una traila de mayor tamaño, con un sistema de energía más robusto.</p>
         </div>
         <div class="accesos__fotos">
-          <figure class="modulo__captura">
+          <figure class="modulo__captura revela">
             <img src="img/guardia-terminal-movil.jpg" alt="Guardia de seguridad escaneando con una terminal móvil la credencial QR de un trabajador en la caseta de acceso de una obra" width="1024" height="559" loading="lazy">
             <figcaption>Terminal móvil: el guardia escanea la credencial QR del trabajador en el acceso.</figcaption>
           </figure>
-          <figure class="modulo__captura">
+          <figure class="modulo__captura revela">
             <img src="img/traila-control-accesos.jpg" alt="Traila solar de control de accesos SSEC con dos lectoras de QR, semáforo y panel solar, colocada frente a la reja de una planta" width="1000" height="680" loading="lazy">
             <figcaption>Traila QR solar en operación.</figcaption>
           </figure>
@@ -370,7 +376,7 @@ a{color:inherit}
               <li>El QR del trabajador se desactiva automáticamente cuando vence el SUA o cualquier documento que usted marque como obligatorio.</li>
               <li>Las aptitudes de cada trabajador se enlazan con los permisos de trabajo digitales: no se puede asignar a una actividad a quien no es apto para ella.</li>
             </ul>
-            <figure class="modulo__captura">
+            <figure class="modulo__captura revela">
               <img src="img/web-trabajadores.jpg" alt="Lista de trabajadores con estatus, credencial QR, puesto, empresa, proyecto y documentos" width="1200" height="916" loading="lazy">
               <figcaption>Trabajadores: credencial QR, puesto, empresa y documentos de cada persona.</figcaption>
             </figure>
@@ -387,7 +393,7 @@ a{color:inherit}
               <li>Al desactivar una empresa, todos sus trabajadores quedan bloqueados en los accesos.</li>
               <li>Archivo histórico anual de los documentos cargados por cada empresa.</li>
             </ul>
-            <figure class="modulo__captura">
+            <figure class="modulo__captura revela">
               <img src="img/web-empresas.jpg" alt="Directorio de empresas contratistas con su estado, avance de documentos y trabajadores" width="1200" height="783" loading="lazy">
               <figcaption>Empresas contratistas: documentos entregados, vencidos y quién puede entrar.</figcaption>
             </figure>
@@ -397,13 +403,9 @@ a{color:inherit}
           <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4l9 16H3z"></path><path d="M12 10v4.5"></path><path d="M12 17.2v0.1"></path></svg>
           <div><h3>Sanciones</h3><p>Registre faltas de seguridad por trabajador o empresa y dé seguimiento con historial y evidencia.</p></div>
         </div>
-        <div class="modulo">
-          <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="2.5"></circle><path d="M3.5 3.5l5 5M8.5 5v3.5H5"></path><path d="M20.5 3.5l-5 5M15.5 5v3.5H19"></path><path d="M3.5 20.5l5-5M8.5 19v-3.5H5"></path><path d="M20.5 20.5l-5-5M15.5 19v-3.5H19"></path></svg>
-          <div><h3>Módulo de evacuación</h3><p>En una emergencia real, sepa al instante quién sigue dentro y quién ya llegó al punto de reunión, con listado de faltantes y reporte descargable al cierre.</p></div>
-        </div>
       </div>
 
-      <div class="destacado destacado--permisos" id="permisos">
+      <div class="destacado destacado--permisos revela" id="permisos">
         <div class="destacado__cuerpo">
           <div class="destacado__titulo">
             <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3H14l4 4v14H6.5z"></path><path d="M14 3v4h4"></path><path d="M9.3 14.2l2 2 3.6-4.2"></path></svg>
@@ -420,31 +422,36 @@ a{color:inherit}
             <li><span><strong>Ubicación del personal.</strong> Cada permiso indica dónde está trabajando cada persona ese día, información que alimenta el módulo de evacuación.</span></li>
           </ul>
         </div>
-        <figure class="destacado__pantalla">
+        <figure class="destacado__pantalla revela">
           <img src="img/web-permisos.jpg" alt="Tablero de permisos de trabajo organizado por zona, con el estado de cada permiso" width="1200" height="894" loading="lazy">
           <figcaption>Tablero de permisos por zona, con el estado del día: en llenado, pendiente de liberación o liberado.</figcaption>
         </figure>
-        <figure class="destacado__pantalla">
+        <figure class="destacado__pantalla revela">
           <img src="img/permiso-digital-pdf.jpg" alt="Permiso de trabajo con sustancias químicas exportado a PDF, con secciones de datos generales, personal, sustancia y peligros, y preparación para emergencias" width="680" height="880" loading="lazy">
           <figcaption>El mismo permiso, exportado a PDF con el formato del cliente, listo para archivo o impresión.</figcaption>
         </figure>
       </div>
 
-      <div class="app">
+      <div class="app" id="evacuacion">
         <div class="app__texto">
-          <h3>La app en campo</h3>
-          <p>Guardias, supervisores y contratistas la usan desde su celular o tableta: escanean credenciales, consultan quién está en obra y, en una emergencia, cuentan al personal en el punto de reunión.</p>
+          <div class="destacado__titulo app__titulo">
+            <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="2.5"></circle><path d="M3.5 3.5l5 5M8.5 5v3.5H5"></path><path d="M20.5 3.5l-5 5M15.5 5v3.5H19"></path><path d="M3.5 20.5l5-5M8.5 19v-3.5H5"></path><path d="M20.5 20.5l-5-5M15.5 19v-3.5H19"></path></svg>
+            <h3>Módulo de evacuación</h3>
+          </div>
+          <p>En una emergencia real, sepa al instante quién sigue dentro y quién ya llegó al punto de reunión, con listado de faltantes y reporte descargable al cierre.</p>
+          <p>Todo ocurre en la app: guardias y supervisores la usan desde su celular o tableta para ver quién está en obra, enviar la alerta y contar al personal en el punto de reunión.</p>
+          <p>Desde el listado de faltantes se abre la ficha de cada trabajador y se ve a qué permisos de trabajo estaba asignado ese día: así la brigada sabe en qué zona buscarlo.</p>
         </div>
         <div class="app__fila">
-          <figure class="telefono">
+          <figure class="telefono revela">
             <img src="img/app-inicio.jpg" alt="Pantalla de inicio de la app SSEC con 347 personas en obra y accesos a En obra, Visitas, Escanear y Permisos" width="563" height="1168" loading="lazy">
             <figcaption>Personas en obra en tiempo real y actividad reciente.</figcaption>
           </figure>
-          <figure class="telefono">
+          <figure class="telefono revela revela--2">
             <img src="img/app-emergencia.jpg" alt="Pantalla de emergencia de la app SSEC con el botón Enviar alarma" width="563" height="1168" loading="lazy">
             <figcaption>La alerta de emergencia llega a todos los celulares que tienen la app instalada y abierta.</figcaption>
           </figure>
-          <figure class="captura tableta">
+          <figure class="captura tableta revela revela--3">
             <img src="img/app-tableta-conteo.jpg" alt="Conteo de evacuación en tableta: 347 personas por contar y escáner de credenciales en el punto de reunión" width="1200" height="675" loading="lazy">
             <figcaption>Conteo de evacuación: con la alarma activa, cada punto de reunión escanea credenciales y la plataforma dice quién falta.</figcaption>
           </figure>
@@ -456,7 +463,7 @@ a{color:inherit}
   <section class="seccion">
     <div class="contenedor campo">
       <article class="solucion" id="torres">
-        <figure class="solucion__foto"><img src="img/traila-cctv-en-obra.jpg" alt="Torre móvil CCTV solar con cámara PTZ en lo alto del mástil, instalada en una obra" width="900" height="1098" loading="lazy"></figure>
+        <figure class="solucion__foto revela"><img src="img/traila-cctv-en-obra.jpg" alt="Torre móvil CCTV solar con cámara PTZ en lo alto del mástil, instalada en una obra" width="900" height="1098" loading="lazy"></figure>
         <div class="cabeza__marca"><span class="insignia" aria-hidden="true">02</span><p class="etiqueta">Videovigilancia</p></div>
         <h2>Torres móviles CCTV solares</h2>
         <p>Videovigilancia autónoma donde no hay energía ni red.</p>
@@ -469,7 +476,7 @@ a{color:inherit}
         </ul>
       </article>
       <article class="solucion" id="drones">
-        <figure class="solucion__foto"><img src="img/dron-despegue-dock.jpg" alt="Dron autónomo despegando de su base abierta, instalada junto a la cerca de una obra" width="571" height="714" loading="lazy"></figure>
+        <figure class="solucion__foto revela"><img src="img/dron-despegue-dock.jpg" alt="Dron autónomo despegando de su base abierta, instalada junto a la cerca de una obra" width="571" height="714" loading="lazy"></figure>
         <div class="cabeza__marca"><span class="insignia" aria-hidden="true">03</span><p class="etiqueta">Vigilancia aérea</p></div>
         <h2>Drones autónomos</h2>
         <p>Despegan, patrullan y regresan a su base sin piloto en sitio.</p>
@@ -514,5 +521,15 @@ a{color:inherit}
   </div>
 </footer>
 
+<script>
+(function(){
+  if(!('IntersectionObserver' in window))return;
+  document.documentElement.classList.add('js');
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visto');io.unobserve(e.target);}});
+  },{rootMargin:'0px 0px -8% 0px',threshold:0.1});
+  document.querySelectorAll('.revela').forEach(function(el){io.observe(el);});
+})();
+</script>
 </body>
 </html>
